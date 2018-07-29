@@ -70,8 +70,35 @@ places_k = {# Kosovo
             'Gnjilane'           : 'Municipality of Gjilan, Kosovo',
             'Đakovica'           : 'Municipality of Gjakova, Kosovo'}
 
+places_usa = {# For testing
+              'Atlanta'       : 'Atlanta, GA, USA',
+              'Boston'        : 'Boston, MA, USA',
+              'Buffalo'       : 'Buffalo, NY, USA',
+              'Charlotte'     : 'Charlotte, NC, USA',
+              'Chicago'       : 'Chicago, IL, USA',
+              'Cleveland'     : 'Cleveland, OH, USA',
+              'Dallas'        : 'Dallas, TX, USA',
+              'Houston'       : 'Houston, TX, USA',
+              'Denver'        : 'Denver, CO, USA',
+              'Detroit'       : 'Detroit, MI, USA',
+              'Las Vegas'     : 'Las Vegas, NV, USA',
+              'Los Angeles'   : {'city':'Los Angeles', 'state':'CA', 'country':'USA'},
+              'Manhattan'     : 'Manhattan, NYC, NY, USA',
+              'Miami'         : 'Miami, FL, USA',
+              'Minneapolis'   : 'Minneapolis, MN, USA',
+              'Orlando'       : 'Orlando, FL, USA',
+              'Philadelphia'  : 'Philadelphia, PA, USA',
+              'Phoenix'       : 'Phoenix, AZ, USA',
+              'Portland'      : 'Portland, OR, USA',
+              'Sacramento'    : 'Sacramento, CA, USA',
+              'San Francisco' : {'city':'San Francisco', 'state':'CA', 'country':'USA'},
+              'Seattle'       : 'Seattle, WA, USA',
+              'St Louis'      : 'St. Louis, MO, USA',
+              'Tampa'         : 'Tampa, FL, USA',
+              'Washington'    : 'Washington, DC, USA'}
+
 def reverse_bearing(x):
-    return x + 100 if x < 180 else x - 180
+    return x + 180 if x < 180 else x - 180
 
 def count_and_merge(n, bearings):
     n = n * 2
@@ -124,7 +151,7 @@ def get_bearings(places, weight_by_length=False):
             b = pd.Series(city_bearings)
             bearings[place] = pd.concat([b, b.map(reverse_bearing)]).reset_index(drop='True')
         else:
-            b = pd.Series(d['bearing'] for u, v, k, d in Gu.edges(keys=True, data=True))
+            b = pd.Series([d['bearing'] for u, v, k, d in Gu.edges(keys=True, data=True)])
             bearings[place] = pd.concat([b, b.map(reverse_bearing)]).reset_index(drop='True')
     return bearings
 
@@ -147,5 +174,10 @@ def print_plots(places, title, file_name):
     plt.close()
 
 ox.config(log_console=True, use_cache=True)
-plot_title = 'City Street Network Orientation Vojvodina'
-print_plots(places_v, plot_title, 'img/o.png')
+plot_title_base = 'City Street Network Orientation '
+print_plots(places_usa, plot_title_base + 'USA', 'img/usa.png')
+print_plots(places_v, plot_title_base + 'Vojvodina', 'img/vojvodina.png')
+print_plots(places_c, plot_title_base + 'Central Serbia', 'img/central.png')
+print_plots(places_s, plot_title_base + 'South Serbia', 'img/south.png')
+print_plots(places_n, plot_title_base + 'Novi Pazar region', 'img/np.png')
+print_plots(places_k, plot_title_base + 'Kosovo', 'img/kosovo.png')
