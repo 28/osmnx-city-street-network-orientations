@@ -4,5 +4,5 @@ Scripted version of [this](https://github.com/gboeing/osmnx-examples/blob/master
 [osmnx](https://github.com/gboeing/osmnx) *Jupyter* notebook example for
 creating city street network orientations for Serbia's major cities.
 
-Check [this](https://geoffboeing.com/2018/07/comparing-city-street-orientations/)
+Check [this](http://theparanoidtimes.org/blog/2018/07/29/city-street-orientations-serbia/)
 blog post for more info.
